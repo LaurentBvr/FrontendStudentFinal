@@ -1,0 +1,8 @@
+<h1>Edition d'un Etudiants</h1>
+<app-user-form
+  [isEdition]="true"
+  [studentToUpdate]="studentToUpdate"
+  (cancel)="onCancel()"
+  (studentUpdated)="onStudentUpdated($event)"
+  >
+</app-user-form>

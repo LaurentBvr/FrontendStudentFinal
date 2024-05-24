@@ -1,0 +1,12 @@
+<h1>Catalogue des cours</h1>
+
+
+<div *ngIf="coursesToShow.length > 0" class="container">
+
+  <div *ngFor="let course of coursesToShow">
+    <app-course [course]="course"></app-course>
+  </div>
+
+</div>
+
+

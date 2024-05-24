@@ -1,0 +1,40 @@
+<div class="container">
+  <form class="user-form" [formGroup]="userForm" (ngSubmit)="save()">
+      <mat-form-field>
+        <mat-label>Prénom</mat-label>
+        <input formControlName="firstName" matInput required type="text">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input formControlName="lastName" matInput required type="text">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput required type="email">
+        <mat-error *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+          Veuillez entrer une adresse email valide
+        </mat-error> <!-- Affichage d'erreur si le champ email est invalide -->
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Mot de passe</mat-label>
+        <input formControlName="password" matInput required type="password">
+        <mat-error *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched">
+          Le mot de passe doit comporter au moins 6 caractères
+        </mat-error> <!-- Affichage d'erreur si le mot de passe est trop court -->
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Confirmez le mot de passe</mat-label>
+        <input formControlName="confirmPassword" matInput required type="password">
+        <mat-error *ngIf="userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched">
+          Les mots de passe doivent correspondre
+        </mat-error> <!-- Affichage d'erreur si les mots de passe ne correspondent pas -->
+      </mat-form-field>
+
+      <button mat-raised-button type="submit">Enregistrer</button>
+      <button mat-raised-button (click)="onCancel()">Annuler</button>
+  </form>
+</div>

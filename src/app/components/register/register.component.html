@@ -1,0 +1,35 @@
+<div class="container">
+    <h1>Inscription</h1>
+
+    <form class="register-form" [formGroup]="registerForm" (ngSubmit)="register()"> <!-- Ajout de (ngSubmit) pour gérer la soumission du formulaire -->
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput required type="email">
+        <mat-error *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          Veuillez entrer une adresse email valide
+        </mat-error> <!-- Affichage d'erreur si le champ email est invalide -->
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Mot de passe</mat-label>
+        <input formControlName="password" matInput required type="password">
+        <mat-error *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          Le mot de passe doit comporter au moins 6 caractères
+        </mat-error> <!-- Affichage d'erreur si le mot de passe est trop court -->
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Confirmez le mot de passe</mat-label>
+        <input formControlName="confirmPassword" matInput required type="password">
+        <mat-error *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+          Les mots de passe doivent correspondre
+        </mat-error> <!-- Affichage d'erreur si les mots de passe ne correspondent pas -->
+      </mat-form-field>
+
+      <button mat-raised-button type="submit">S'inscrire</button> <!-- Bouton de soumission du formulaire -->
+    </form>
+
+    <div class="register-link">
+      <a (click)="navToLogin()">Retour</a>
+    </div>
+  </div>a

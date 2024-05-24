@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.actions-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.spacer {
+  flex: 1;
+}

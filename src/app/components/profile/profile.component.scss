@@ -1,0 +1,9 @@
+@import '../../../assets/styles/colors.scss';
+
+.info-user {
+  color: $white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+}

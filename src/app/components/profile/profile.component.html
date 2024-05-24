@@ -1,0 +1,9 @@
+<div>
+  <div *ngIf="currentUserInfo != undefined" class="info-user">
+    <div>{{ currentUserInfo.firstName }} {{ currentUserInfo.lastName }}</div>
+    <div>{{ currentUserInfo.email }}</div>
+    <div>{{ currentUserInfo.role }}</div>
+  </div>
+
+  <button mat-raised-button (click)="onLogout()">Se déconnecter</button>
+</div>
