@@ -1,0 +1,57 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
+namespace StudentBackend.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
+    {
+        private readonly string _secret;
+
+        public AuthController(IConfiguration configuration)
+        {
+            _secret = configuration.GetValue<string>("Jwt:Secret");
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginRequest loginRequest)
+        {
+            // Ici vous devriez vérifier les informations d'identification de l'utilisateur (par exemple, vérifier le mot de passe hashé dans la base de données)
+            if (IsValidUser(loginRequest))
+            {
+                var token = GenerateJwtToken(loginRequest.Username);
+                return Ok(new { token });
+            }
+            return Unauthorized();
+        }
+
+        private bool IsValidUser(LoginRequest loginRequest)
+        {
+            // Remplacer cette logique par la vérification réelle de l'utilisateur et du mot de passe
+            return loginRequest.Username == "test" && loginRequest.Password == "password";
+        }
+
+        private string GenerateJwtToken(string username)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name, username),
+                    new Claim(ClaimTypes.Role, "User") // Ajouter des rôles ou d'autres claims si nécessaire
+                }),
+                Expires = DateTime.UtcNow.AddHours(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+    }
+}
