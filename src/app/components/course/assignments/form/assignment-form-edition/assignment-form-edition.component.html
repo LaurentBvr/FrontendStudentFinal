@@ -1,0 +1,10 @@
+<h1>Edition d'un travail</h1>
+
+<app-assignment-form
+  [isEdition]="true"
+  [assignmentToUpdate]="assignmentToUpdate"
+  (cancel)="onCancel()"
+  (assignmentUpdated)="onAssignmentUpdated($event)"
+  >
+</app-assignment-form>
+

@@ -1,12 +1,46 @@
-<h1>Catalogue des cours</h1>
-
+<div class="header">
+  <h1>Cours</h1>
+  <button
+    *ngIf="isAdmin || isInstructor"
+    mat-raised-button
+    (click)="showOverlayCreationForm = true"
+    >
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add"></mat-icon>
+    Ajouter un cours
+  </button>
+</div>
 
 <div *ngIf="coursesToShow.length > 0" class="container">
-
-  <div *ngFor="let course of coursesToShow">
-    <app-course [course]="course"></app-course>
+  <div *ngFor="let course of coursesToShow" style="width: 100%;">
+    <app-course
+      [course]="course"
+      (courseToUpdate)="onCourseUpdate($event)"
+      (onCourseToDelete)="onCourseToDelete($event)"
+      >
+    </app-course>
   </div>
+</div>
 
+<div *ngIf="showOverlayCreationForm" class="overlay">
+  <div class="overlay-container">
+    <app-course-form-creation
+      (cancel)="showOverlayCreationForm = false"
+      (courseCreated)="onCourseCreated($event)"
+      >
+    </app-course-form-creation>
+  </div>
+</div>
+
+
+<div *ngIf="showOverlayUpdateForm" class="overlay">
+  <div class="overlay-container">
+    <app-course-form-edition
+      [courseToUpdate]="courseToUpdate"
+      (cancel)="showOverlayUpdateForm = false"
+      (courseUpdated)="onCourseUpdated($event)"
+      >
+    </app-course-form-edition>
+  </div>
 </div>
 
 

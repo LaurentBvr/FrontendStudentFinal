@@ -1,6 +1,5 @@
-.hearder {
-  width: 100%;
+.tabs-container {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 30px;
 }

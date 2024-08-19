@@ -1,7 +1,10 @@
-<h1>Création d'un Etudiants</h1>
+<h1 *ngIf="isStudents">Création d'un Etudiants</h1>
+<h1 *ngIf="!isStudents">Création d'un Instructeur</h1>
+
 <app-user-form
+  [isStudents]="isStudents"
   [isEdition]="false"
   (cancel)="onCancel()"
-  (studentCreated)="onStudentCreated($event)"
+  (userCreated)="onUserCreated($event)"
   >
 </app-user-form>

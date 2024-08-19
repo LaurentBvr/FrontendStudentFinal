@@ -34,6 +34,7 @@ $light-theme: mat.define-light-theme((
 }
 
 @import './assets/styles/colors.scss';
+@import './assets/styles/overlay.scss';
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

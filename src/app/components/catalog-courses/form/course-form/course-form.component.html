@@ -1,0 +1,19 @@
+<div class="container">
+  <form class="course-form" [formGroup]="courseForm" (ngSubmit)="save()">
+      <mat-form-field>
+        <mat-label>Nom</mat-label>
+        <input formControlName="name" matInput required type="text">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Année</mat-label>
+        <input formControlName="courseYear" matInput required type="text">
+      </mat-form-field>
+
+
+      <div class="actions-form">
+        <button mat-raised-button type="submit">Enregistrer</button>
+        <button mat-raised-button (click)="onCancel()">Annuler</button>
+      </div>
+  </form>
+</div>

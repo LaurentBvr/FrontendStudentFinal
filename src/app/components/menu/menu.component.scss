@@ -1,0 +1,15 @@
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+button {
+  width: 250px;
+  justify-content: flex-start;
+}
+
+.selected {
+  background-color: rgb(132, 132, 132) !important;
+}

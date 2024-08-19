@@ -1,0 +1,27 @@
+
+<div class="container">
+  <form [formGroup]="assignmentForm" (ngSubmit)="save()">
+      <div class="assignment-form">
+        <mat-form-field>
+          <mat-label>Titre</mat-label>
+          <input formControlName="title" matInput required type="text">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Total</mat-label>
+          <input formControlName="totalGrade" matInput required type="text">
+        </mat-form-field>
+
+        <div class="drop-file-zone">
+          <div><mat-icon aria-hidden="false" fontIcon="arrow_downward"></mat-icon></div>
+          <p>Glisser les fichiers à importer ici</p>
+          <button mat-raised-button>Importer</button>
+        </div>
+      </div>
+
+      <div class="actions-form">
+        <button mat-raised-button (click)="onCancel()">Retour</button>
+        <button mat-raised-button type="submit">Enregistrer</button>
+      </div>
+  </form>
+</div>

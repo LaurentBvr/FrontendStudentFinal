@@ -34,7 +34,9 @@
         </mat-error> <!-- Affichage d'erreur si les mots de passe ne correspondent pas -->
       </mat-form-field>
 
-      <button mat-raised-button type="submit">Enregistrer</button>
-      <button mat-raised-button (click)="onCancel()">Annuler</button>
+      <div class="actions-form">
+        <button mat-raised-button type="submit">Enregistrer</button>
+        <button mat-raised-button (click)="onCancel()">Annuler</button>
+      </div>
   </form>
 </div>

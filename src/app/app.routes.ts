@@ -7,6 +7,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { CatalogCoursesComponent } from './components/catalog-courses/catalog-courses.component';
 import { AuthGuardService } from './service/auth-guard.service';
 import { UserManagementComponent } from './components/admin/user-management/user-management.component';
+import { CourseComponent } from './components/course/course.component';
+import { CourseManagementComponent } from './components/admin/course-management/course-management.component';
 
 export const routes: Routes = [
     {
@@ -41,6 +43,10 @@ export const routes: Routes = [
           {
             path: MenuRoutes.USER_MANAGEMENT,
             component: UserManagementComponent,
+          },
+          {
+            path: MenuRoutes.COURSE_MANAGEMENT,
+            component: CourseManagementComponent,
           },
         ]
     },

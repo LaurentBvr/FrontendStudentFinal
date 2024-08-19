@@ -1,0 +1,9 @@
+<h1>Edition d'un cours</h1>
+
+<app-course-form
+  [isEdition]="true"
+  [courseToUpdate]="courseToUpdate"
+  (cancel)="onCancel()"
+  (courseUpdated)="onCourseUpdated($event)"
+  >
+</app-course-form>

@@ -1,9 +1,28 @@
 @import '../../../assets/styles/colors.scss';
 
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.container-profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-direction: row;
+}
+
 .info-user {
   color: $white;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  gap: 15px;
+  gap: 5px;
+}
+
+img {
+  width: 50px;
 }

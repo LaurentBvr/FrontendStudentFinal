@@ -1,26 +1,27 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { PersonModel } from '../../../../../models/person.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-form-creation',
   standalone: true,
-  imports: [ UserFormComponent ],
+  imports: [ CommonModule, UserFormComponent ],
   templateUrl: './user-form-creation.component.html',
   styleUrl: './user-form-creation.component.scss'
 })
 export class UserFormCreationComponent {
 
+  @Input() isStudents: Boolean;
+
   @Output() cancel = new EventEmitter<void>();
-  @Output() studentCreated = new EventEmitter<PersonModel>();
+  @Output() userCreated = new EventEmitter<PersonModel>();
 
   public onCancel(): void {
     this.cancel.emit();
   }
 
-  public onStudentCreated(studentCreated: PersonModel): void {
-    console.log("UserFormCreationComponent: ", studentCreated);
-
-    this.studentCreated.emit(studentCreated);
+  public onUserCreated(userCreated: PersonModel): void {
+    this.userCreated.emit(userCreated);
   }
 }

@@ -1,5 +1,6 @@
-export interface AssignmentModel{
+export interface AssignmentModel {
+    assignmentId:string;
     title:string;
-    courseName:string;
+    courseId:string;
     totalGrade:number;
 }

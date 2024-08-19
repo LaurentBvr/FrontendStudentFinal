@@ -51,6 +51,9 @@ export class LoginComponent implements  OnInit{
     this.router.navigate([MenuRoutes.REGISTER]);
   }
 
+  /**
+   * ! Login modifié pour test !
+   */
   public async login(): Promise<void> {
     if (this.loginForm.valid) {
       try {
@@ -65,6 +68,16 @@ export class LoginComponent implements  OnInit{
           lastName: this.jwtService.getLastName(),
           role: this.jwtService.getRole().toUpperCase()
         }
+
+
+        // const currentUser: PersonModel = {
+        //   personId: "id",
+        //   email: "user@gmail.com",
+        //   firstName: "Max",
+        //   lastName: "Test",
+        //   role: Roles.INSTRUCTOR
+        // }
+        console.log(currentUser);
 
         this.userService.setCurrentUser(currentUser);
 
@@ -84,8 +97,13 @@ export class LoginComponent implements  OnInit{
     }
   }
 
+  /**
+   * ! Login modifié pour test !
+   */
   public async autoLoging(): Promise<any> {
     const token = localStorage.getItem('token');
+
+    //const token = true;
 
     if (token) {
       try {
@@ -99,10 +117,21 @@ export class LoginComponent implements  OnInit{
           role: this.jwtService.getRole().toUpperCase()
         }
 
+        // const currentUser: PersonModel = {
+        //   personId: "id",
+        //   email: "user@gmail.com",
+        //   firstName: "Max",
+        //   lastName: "Test",
+        //   role: Roles.INSTRUCTOR
+        // }
+
         this.userService.setCurrentUser(currentUser);
 
+        console.log(currentUser);
+
+
         if (currentUser.role == Roles.ADMIN) {
-          this.router.navigate([MenuRoutes.ADMIN, MenuRoutes.DASHBOAR]);
+          this.router.navigate([MenuRoutes.ADMIN, MenuRoutes.DASHBOAR, MenuRoutes.USER_MANAGEMENT]);
         }
         else if (currentUser.role == Roles.STUDENT) {
           this.router.navigate([MenuRoutes.STUDENT, MenuRoutes.DASHBOAR, MenuRoutes.CATALOG_COURSES]);

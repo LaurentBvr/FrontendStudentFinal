@@ -1,0 +1,13 @@
+.hearder {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.action-on-user {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 15px;
+}

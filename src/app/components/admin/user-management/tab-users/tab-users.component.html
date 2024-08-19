@@ -1,0 +1,78 @@
+<div *ngIf="isStudents" class="hearder">
+  <h1>Etudiants</h1>
+  <button mat-raised-button (click)="showOverlayCreationForm = true">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add"></mat-icon>
+    Ajouter un étudiant
+  </button>
+</div>
+
+<div *ngIf="!isStudents" class="hearder">
+  <h1>Instructeurs</h1>
+  <button mat-raised-button (click)="showOverlayCreationForm = true">
+    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="add"></mat-icon>
+    Ajouter un instruteur
+  </button>
+</div>
+
+<table mat-table [dataSource]="users" class="mat-elevation-z8">
+  <!-- Position Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="firstName">
+    <th mat-header-cell *matHeaderCellDef> Prénom </th>
+    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef> Nom </th>
+    <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef> </th>
+    <td mat-cell *matCellDef="let element">
+      <div class="action-on-user">
+        <button mat-raised-button (click)="onDelete(element.personId)">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+        </button>
+        <button mat-raised-button (click)="onUpdate(element)">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="edit"></mat-icon>
+        </button>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<div *ngIf="showOverlayCreationForm" class="overlay">
+  <div class="overlay-container">
+    <app-user-form-creation
+      [isStudents]="isStudents"
+      (cancel)="showOverlayCreationForm = false"
+      (userCreated)="onUserCreated($event)"
+      >
+    </app-user-form-creation>
+  </div>
+</div>
+
+
+<div *ngIf="showOverlayUpdateForm" class="overlay">
+  <div class="overlay-container">
+    <app-user-form-update
+      [isStudents]="isStudents"
+      [userToUpdate]="userToUpdate"
+      (cancel)="showOverlayUpdateForm = false"
+      (userUpdated)="onUserUpdated($event)"
+      >
+    </app-user-form-update>
+  </div>
+</div>
+

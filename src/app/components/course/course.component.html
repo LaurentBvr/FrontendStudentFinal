@@ -1,11 +1,10 @@
-<mat-card class="card">
+<mat-card>
   <mat-card-header>
-    <mat-card-title>{{ course.name }}</mat-card-title>
+    <mat-card-title>{{ course.name }} <div *ngIf="showInscription" class="insciption-avalable"></div></mat-card-title>
     <mat-card-subtitle>Donner par : {{ course.instructorName }}</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-    <p>This card has divider and indeterminate progress as footer</p>
     <p></p>
   </mat-card-content>
 
@@ -13,9 +12,63 @@
 
   <mat-card-actions>
     <div class="actions-container">
-      <button mat-raised-button>Tâches à effectuer</button>
-      <span class="spacer"></span>
-      <button mat-raised-button>S'inscrire</button>
+      <button mat-raised-button [matMenuTriggerFor]="menu">
+        <mat-icon aria-hidden="false" fontIcon="more_horiz"></mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          *ngIf="isStudent || isInstructor || isAdmin"
+          (click)="openOverlay = true; courseIdAssignmentSelected = course.courseId"
+          >
+          <mat-icon aria-hidden="false" fontIcon="assignment"></mat-icon>
+          Travaux
+        </button>
+
+        <button mat-menu-item *ngIf="isStudent && canRegister" (click)="registerStudent(course.courseId)">
+          <mat-icon aria-hidden="false" fontIcon="app_registration"></mat-icon>
+          S'inscrire
+        </button>
+
+        <button mat-menu-item *ngIf="isInstructor || isAdmin" (click)="showInscriptions = true">
+          <mat-icon aria-hidden="false" fontIcon="format_list_bulleted"></mat-icon>
+          Voir les inscriptions
+        </button>
+
+        <button mat-menu-item *ngIf="isInstructor || isAdmin" (click)="onCoursUpdate(course)">
+          <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
+          Editer
+        </button>
+
+        <button mat-menu-item *ngIf="isAdmin" (click)="onDeleteCourse(course.courseId)">
+          <mat-icon aria-hidden="false" fontIcon="delete"></mat-icon>
+          Supprimer
+        </button>
+      </mat-menu>
     </div>
   </mat-card-actions>
 </mat-card>
+
+<div *ngIf="openOverlay" class="overlay">
+  <div class="overlay-container">
+    <div class="close-overlay"><mat-icon aria-hidden="false" fontIcon="close" (click)="openOverlay = false"></mat-icon></div>
+    <app-assignments [courseIdAssignmentSelected]="courseIdAssignmentSelected"></app-assignments>
+  </div>
+</div>
+
+<div *ngIf="showInscriptions" class="overlay">
+  <div class="overlay-container">
+    <div class="close-overlay"><mat-icon aria-hidden="false" fontIcon="close" (click)="showInscriptions = false"></mat-icon></div>
+
+    <div class="inscriptions">
+      <h1>Inscription a ce cours</h1>
+
+      <div *ngFor="let item of personIds">
+        {{ item }}
+      </div>
+    </div>
+  </div>
+</div>
+
+

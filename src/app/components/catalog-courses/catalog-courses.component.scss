@@ -4,12 +4,15 @@
   flex-wrap: wrap;
   gap: 15px;
 }
+
 .actions-container {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-.spacer {
-  flex: 1;
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }

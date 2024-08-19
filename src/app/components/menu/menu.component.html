@@ -1,1 +1,29 @@
+<div class="menu-container">
+  <!-- <div>Catalogue des cours</div> -->
+  <button
+    *ngIf="isAdmin"
+    mat-raised-button
+    [ngClass]="{'selected': isUserManagement}"
+    (click)="onNavigation(menuRoutes.USER_MANAGEMENT)"
+    >
+    Management des utilisateurs
+  </button>
 
+  <button
+    *ngIf="isAdmin || isInstructor"
+    mat-raised-button
+    [ngClass]="{'selected': isCoursManagement}"
+    (click)="onNavigation(menuRoutes.COURSE_MANAGEMENT)"
+    >
+    Management des cours
+  </button>
+
+  <button
+    *ngIf="isStudent"
+    mat-raised-button
+    [ngClass]="{'selected': isCoursManagement}"
+    (click)="onNavigation(menuRoutes.COURSE_MANAGEMENT)"
+    >
+    Catalogue des cours
+  </button>
+</div>

@@ -1,0 +1,83 @@
+
+<div class="container" *ngIf="isAssignmentListView">
+  <h1>Travaux</h1>
+
+  <div class="container-assignments">
+    <div *ngFor="let item of assignments">
+      <div class="item">
+        <div class="item__title">
+          <h2>{{ item.title }} </h2>
+          <div>Note sur {{ item.totalGrade }}</div>
+        </div>
+
+        <div>
+          <div class="actions-container">
+            <button mat-raised-button [matMenuTriggerFor]="menu">
+              <mat-icon aria-hidden="false" fontIcon="more_horiz"></mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item *ngIf="isStudent" (click)="submitAWork()">
+                <mat-icon aria-hidden="false" fontIcon="control_point"></mat-icon>
+                Remettre un travail
+              </button>
+
+              <button mat-menu-item *ngIf="isStudent">
+                <mat-icon aria-hidden="false" fontIcon="arrow_downward"></mat-icon>
+                Télécharger
+              </button>
+
+              <button mat-menu-item *ngIf="isInstructor || isAdmin" (click)="editAssignment(item)">
+                <mat-icon aria-hidden="false" fontIcon="edit"></mat-icon>
+                Editer
+              </button>
+
+              <button mat-menu-item *ngIf="isInstructor || isAdmin" (click)="deleteAssignment(item.assignmentId)">
+                <mat-icon aria-hidden="false" fontIcon="delete"></mat-icon>
+                Supprimer
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-footer">
+    <button mat-raised-button *ngIf="isInstructor || isAdmin" (click)="isCreationAssignmentFormView = true; isAssignmentListView = false">
+      <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
+      Ajouter un travail
+    </button>
+  </div>
+</div>
+
+<div class="container" *ngIf="isCreationAssignmentFormView">
+  <app-assignment-form-creation
+    [courseIdAssignmentSelected]="courseIdAssignmentSelected"
+    (cancel)="isCreationAssignmentFormView = false; isAssignmentListView = true"
+    (assignmentCreated)="onAssignmentCreated($event)"
+    >
+  </app-assignment-form-creation>
+</div>
+
+<div class="container" *ngIf="isEditionAssignmentFormView">
+  <app-assignment-form-edition
+    [assignmentToUpdate]="assignmentToUpdate"
+    (cancel)="isEditionAssignmentFormView = false; isAssignmentListView = true"
+    (assignmentUpdated)="onAssignmentUpdated($event)"
+    >
+  </app-assignment-form-edition>
+</div>
+
+<div class="container" *ngIf="isAddFileToAssigmentByStudent">
+  <h1>Remise de travaux</h1>
+
+  <div class="drop-file-zone">
+    <div><mat-icon aria-hidden="false" fontIcon="arrow_downward"></mat-icon></div>
+    <p>Glisser les fichiers à importer ici</p>
+    <button mat-raised-button>Importer</button>
+  </div>
+
+  <div></div>
+</div>
+

@@ -1,3 +1,4 @@
+import { SnackBarService } from './../../../../../service/shared/snack-bar.service';
 import { UserService } from './../../../../../service/api/user.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
@@ -29,17 +30,19 @@ export function passwordMatchValidator(control: AbstractControl): { [key: string
 export class UserFormComponent implements OnInit {
 
   @Input() isEdition: boolean;
-  @Input() studentToUpdate: PersonModel;
+  @Input() userToUpdate: PersonModel;
+  @Input() isStudents: Boolean;
 
   @Output() cancel = new EventEmitter<void>();
-  @Output() studentCreated = new EventEmitter<PersonModel>();
-  @Output() studentUpdated = new EventEmitter<PersonModel>();
+  @Output() userCreated = new EventEmitter<PersonModel>();
+  @Output() userUpdated = new EventEmitter<PersonModel>();
 
   public userForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private snackBarService: SnackBarService
   ) {}
 
   ngOnInit(): void {
@@ -62,9 +65,9 @@ export class UserFormComponent implements OnInit {
 
   private initForm(): void {
     this.userForm.patchValue({
-      email: this.studentToUpdate.email,
-      firstName: this.studentToUpdate.firstName,
-      lastName: this.studentToUpdate.lastName,
+      email: this.userToUpdate.email,
+      firstName: this.userToUpdate.firstName,
+      lastName: this.userToUpdate.lastName,
     })
   }
 
@@ -72,17 +75,17 @@ export class UserFormComponent implements OnInit {
   public save(): void {
     if (this.userForm.valid) {
       if (this.isEdition) {
-        this.edition();
+        this.isStudents ? this.editionStudent() : this.editionInstructor();
       }
       else {
-        this.creation();
+        this.isStudents ? this.creationStudent() : this.creationInstructor();
       }
     }
   }
 
-  private async creation(): Promise<void> {
+  private async creationStudent(): Promise<void> {
     try {
-      const studentCreated: PersonModel = await this.userService.
+      const userCreated: PersonModel = await this.userService.
         creatStudent(
           this.userForm.get('email')?.value,
           this.userForm.get('firstName')?.value,
@@ -90,33 +93,75 @@ export class UserFormComponent implements OnInit {
           this.userForm.get('password')?.value,
         );
 
-      this.studentCreated.emit(studentCreated);
+      this.snackBarService.openSnackBar("L'étudiant à bien été créé !", "OK");
+
+      this.userCreated.emit(userCreated);
     }
     catch (error) {
-      console.log(error);
+      this.snackBarService.openSnackBar("L'étudiant n'a pas pu être créé !", "OK", null);
     }
   }
 
-  private async edition(): Promise<void> {
+  private async editionStudent(): Promise<void> {
     try {
-      const studentUpdated: PersonModel = await this.userService.
+      const userUpdated: PersonModel = await this.userService.
         updateStudent(
-          this.studentToUpdate.personId,
+          this.userToUpdate.personId,
           this.userForm.get('email')?.value,
           this.userForm.get('firstName')?.value,
           this.userForm.get('lastName')?.value,
           this.userForm.get('password')?.value,
         );
 
-      this.studentUpdated.emit(studentUpdated);
+      this.snackBarService.openSnackBar("L'étudiant a bien été modifié !", "OK");
+
+      this.userUpdated.emit(userUpdated);
     }
     catch (error) {
-      console.log(error);
+      this.snackBarService.openSnackBar("L'étudiant n'a pas pu être modifié !", "OK", null);
+    }
+  }
+
+  private async creationInstructor(): Promise<void> {
+    try {
+      const userCreated: PersonModel = await this.userService.
+        creatInstructor(
+          this.userForm.get('email')?.value,
+          this.userForm.get('firstName')?.value,
+          this.userForm.get('lastName')?.value,
+          this.userForm.get('password')?.value,
+        );
+
+      this.userCreated.emit(userCreated);
+
+      this.snackBarService.openSnackBar("L'instructeur à bien été créé !", "OK");
+    }
+    catch (error) {
+      this.snackBarService.openSnackBar("L'instructeur n'a pas pu être créé !", "OK", null);
+    }
+  }
+
+  private async editionInstructor(): Promise<void> {
+    try {
+      const userUpdated: PersonModel = await this.userService.
+        updateInstructor(
+          this.userToUpdate.personId,
+          this.userForm.get('email')?.value,
+          this.userForm.get('firstName')?.value,
+          this.userForm.get('lastName')?.value,
+          this.userForm.get('password')?.value,
+        );
+
+      this.snackBarService.openSnackBar("L'instructeur a bien été modifié !", "OK");
+
+      this.userUpdated.emit(userUpdated);
+    }
+    catch (error) {
+      this.snackBarService.openSnackBar("L'instructeur n'a pas pu être modifié !", "OK", null);
     }
   }
 
   public onCancel(): void {
     this.cancel.emit();
   }
-
 }

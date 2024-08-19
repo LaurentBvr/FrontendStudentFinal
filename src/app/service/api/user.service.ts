@@ -4,13 +4,13 @@ import { PersonModel } from '../../models/person.model';
 import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
 import { PersonCreationModel } from '../../models/person.creation.model';
 import { PersonUpdateModel } from '../../models/person.update.model';
+import { API } from '../../constants/api'
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private urlAPI: string = "http://localhost:5151/api"
 
   private currentUserSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   public currentUser$: Observable<any> = this.currentUserSubject.asObservable();
@@ -28,13 +28,10 @@ export class UserService {
   }
 
   public async getStudents(): Promise<Array<PersonModel>> {
-    const url: string = `${this.urlAPI}/Student`;
-
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`});
+    const url: string = `${API.API_URL}/Student`;
 
     try {
-      const respons: any = await firstValueFrom(this.http.get(url, { headers, responseType: 'json' }));
+      const respons: any = await firstValueFrom(this.http.get(url, { responseType: 'json' }));
       return respons as Array<PersonModel>;
     }
     catch (error) {
@@ -44,10 +41,7 @@ export class UserService {
   }
 
   public async creatStudent(email: string, firstName: string, lastName: string, password: string): Promise<PersonModel> {
-    const url: string = `${this.urlAPI}/Student/`;
-
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`});
+    const url: string = `${API.API_URL}/Student/`;
 
     const personToCreat: PersonCreationModel = {
       email: email,
@@ -57,7 +51,7 @@ export class UserService {
     }
 
     try {
-      const personCreated: any = await firstValueFrom(this.http.post(url, personToCreat, { headers, responseType: 'json' }));
+      const personCreated: any = await firstValueFrom(this.http.post(url, personToCreat, { responseType: 'json' }));
       return personCreated as PersonModel
     }
     catch (error) {
@@ -67,10 +61,7 @@ export class UserService {
   }
 
   public async updateStudent(id: string, email: string, firstName: string, lastName: string, password: string): Promise<PersonModel> {
-    const url: string = `${this.urlAPI}/Student/${id}`;
-
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`});
+    const url: string = `${API.API_URL}/Student/${id}`;
 
     const personToUpdate: PersonUpdateModel = {
       personId: id,
@@ -81,7 +72,7 @@ export class UserService {
     }
 
     try {
-      const personCreated: any = await firstValueFrom(this.http.put(url, personToUpdate, { headers, responseType: 'json' }));
+      const personCreated: any = await firstValueFrom(this.http.put(url, personToUpdate, { responseType: 'json' }));
       return personCreated as PersonModel;
     }
     catch (error) {
@@ -91,13 +82,76 @@ export class UserService {
   }
 
   public async deleteStudentById(id: string): Promise<void> {
-    const url: string = `${this.urlAPI}/Student/${id}`;
-
-    const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`});
+    const url: string = `${API.API_URL}/Student/${id}`;
 
     try {
-      await firstValueFrom(this.http.delete(url, { headers, responseType: 'json' }));
+      await firstValueFrom(this.http.delete(url, { responseType: 'json' }));
+    }
+    catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  public async getInstructors(): Promise<Array<PersonModel>> {
+    const url: string = `${API.API_URL}/Instructor`;
+
+    try {
+      const respons: any = await firstValueFrom(this.http.get(url, { responseType: 'json' }));
+      return respons as Array<PersonModel>;
+    }
+    catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  public async creatInstructor(email: string, firstName: string, lastName: string, password: string): Promise<PersonModel> {
+    const url: string = `${API.API_URL}/Instructor/`;
+
+    const personToCreat: PersonCreationModel = {
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      password: password
+    }
+
+    try {
+      const personCreated: any = await firstValueFrom(this.http.post(url, personToCreat, { responseType: 'json' }));
+      return personCreated as PersonModel
+    }
+    catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  public async updateInstructor(id: string, email: string, firstName: string, lastName: string, password: string): Promise<PersonModel> {
+    const url: string = `${API.API_URL}/Instructor/${id}`;
+
+    const personToUpdate: PersonUpdateModel = {
+      personId: id,
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      password: password
+    }
+
+    try {
+      const personCreated: any = await firstValueFrom(this.http.put(url, personToUpdate, { responseType: 'json' }));
+      return personCreated as PersonModel;
+    }
+    catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  public async deleteInstructorById(id: string): Promise<void> {
+    const url: string = `${API.API_URL}/Instructor/${id}`;
+
+    try {
+      await firstValueFrom(this.http.delete(url, { responseType: 'json' }));
     }
     catch (error) {
       console.log(error);
